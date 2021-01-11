@@ -33,12 +33,15 @@ jobs:
     - name: Clone source code
       run: |
         git clone --depth=1 https://github.com/chongshengB/rt-n56u.git /opt/rt-n56u
+        rm /opt/rt-n56u/trunk/user/smartdns/smartdns-Release31.tar.gz
+        wget https://github.com/pymumu/smartdns/archive/Release33.tar.gz -O /opt/rt-n56u/trunk/user/smartdns/smartdns-Release33.tar.gz
+        find /opt/rt-n56u/trunk/user/smartdns -name Makefile | xargs sed -i 's/smartdns-Release31/smartdns-Release33/g'
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
     - name: Build Firmware
       env:
-        TNAME: K2P-5.0
+        TNAME: MI-R3P
       run: |
         cd /opt/rt-n56u/trunk
         if [ ! -f configs/templates/$TNAME.config ] ; then
