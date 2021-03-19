@@ -45,11 +45,6 @@ jobs:
         find /opt/rt-n56u/trunk/user/smartdns -name Makefile | xargs sed -i 's/smartdns-Release31/smartdns-master/g'
         find /opt/rt-n56u/trunk/user/smartdns -name Makefile | xargs sed -i 's/tar zxf $(SRC_NAME).tar.gz/unzip $(SRC_NAME).zip/g'
 
-        #自定义zerotier版本
-        rm /opt/rt-n56u/trunk/user/zerotier/ZeroTierOne-1.4.6.tar.gz
-        wget https://github.com/zerotier/ZeroTierOne/archive/1.6.4.tar.gz -O /opt/rt-n56u/trunk/user/zerotier/ZeroTierOne-1.6.4.tar.gz
-        find /opt/rt-n56u/trunk/user/zerotier -name Makefile | xargs sed -i 's/ZeroTierOne-1.4.6/ZeroTierOne-1.6.4/g'
-
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
