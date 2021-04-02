@@ -1,6 +1,8 @@
 #修改TNAME: K2P-5.0 中的K2P-5.0为你需要编译的型号，注意名称要与configs/templates/目录下的名字相同
 
-name: MI-R3P Padavan
+name: Build Padavan
+
+
 
 on: 
 
@@ -26,13 +28,17 @@ on:
 
     types: [started]
 
+
+
 jobs:
 
   build:
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     if: github.event.repository.owner.id == github.event.sender.id
+
+
 
     steps:
 
@@ -50,17 +56,19 @@ jobs:
 
         sudo apt-get update
 
-        sudo apt-get -y install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd fakeroot \
+        sudo apt-get -y install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd fakeroot kmod \
 
         cpio git python-docutils gettext automake autopoint texinfo build-essential help2man \
 
-        pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget
+        pkg-config zlib1g-dev libgmp3-dev libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
 
     - name: Clone source code
 
       run: |
 
         git clone --depth=1 https://github.com/chongshengB/rt-n56u.git /opt/rt-n56u
+
+
 
         #自定义smartdns版本
 
@@ -81,6 +89,8 @@ jobs:
         find /opt/rt-n56u/trunk/user/smartdns -name Makefile | xargs sed -i 's/smartdns-Release31/smartdns-master/g'
 
         find /opt/rt-n56u/trunk/user/smartdns -name Makefile | xargs sed -i 's/tar zxf $(SRC_NAME).tar.gz/unzip $(SRC_NAME).zip/g'
+
+
 
         cd /opt/rt-n56u/toolchain-mipsel
 
@@ -118,6 +128,12 @@ jobs:
 
         sed -i '/CONFIG_FIRMWARE_INCLUDE_MENTOHUST/d' .config #删除配置项MENTOHUST
 
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_SERVER/d' .config #删除配置项SOFTETHERVPN
+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CLIENT/d' .config #删除配置项SOFTETHERVPN
+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CMD/d' .config #删除配置项SOFTETHERVPN
+
         sed -i '/CONFIG_FIRMWARE_INCLUDE_SCUTCLIENT/d' .config #删除配置项SCUTCLIENT
 
         sed -i '/CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS/d' .config #删除配置项SS plus+
@@ -140,9 +156,17 @@ jobs:
 
         sed -i '/CONFIG_FIRMWARE_INCLUDE_SRELAY/d' .config
 
-        sed -i '/CONFIG_FIRMWARE_INCLUDE_V2RAY/d' .config
-
         sed -i 's/CONFIG_FIRMWARE_INCLUDE_OPENSSL_EXE=n/CONFIG_FIRMWARE_INCLUDE_OPENSSL_EXE=y/g' .config
+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SFE/d' .config #删除配置项SFE加速
+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_NAPT66/d' .config
+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_NJIT_CLIENT/d' .config
+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_MINIEAP/d' .config
+
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_DOGCOM/d' .config
 
         ######################################################################
 
@@ -151,6 +175,14 @@ jobs:
         ######################################################################
 
         echo "CONFIG_FIRMWARE_INCLUDE_MENTOHUST=n" >> .config #MENTOHUST
+
+        echo "CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_SERVER=n" >> .config #SOFTETHERVPN
+
+        echo "CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CLIENT=n" >> .config #SOFTETHERVPN
+
+        echo "CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CMD=n" >> .config #SOFTETHERVPN
+
+        echo "CONFIG_FIRMWARE_INCLUDE_SFE=y" >> .config #集成SFE加速
 
         echo "CONFIG_FIRMWARE_INCLUDE_SCUTCLIENT=n" >> .config #SCUTCLIENT
 
@@ -176,8 +208,6 @@ jobs:
 
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=y" >> .config #smartdns二进制文件
 
-        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config #集成v2ray执行文件（3.8M左右)，如果不集成，会从网上下载下来执行，不影响正常使用
-
         echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=n" >> .config #集成trojan执行文件(1.1M左右)，如果不集成，会从网上下载下来执行，不影响正常使用
 
         echo "CONFIG_FIRMWARE_INCLUDE_KOOLPROXY=n" >> .config #KP广告过滤
@@ -186,7 +216,13 @@ jobs:
 
         echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=n" >> .config #集成caddu执行文件，此文件有13M,请注意固件大小。如果不集成，会从网上下载下来执行，不影响正常使用
 
+        echo "CONFIG_FIRMWARE_INCLUDE_KUMASOCKS=y" >> .config #socks5
+
         echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config
+
+        echo "CONFIG_FIRMWARE_INCLUDE_IPT2SOCKS=y" >> .config
+
+        echo "CONFIG_FIRMWARE_INCLUDE_MICROSOCKS=y" >> .config
 
         echo "CONFIG_FIRMWARE_INCLUDE_SRELAY=n" >> .config #可以不集成
 
@@ -195,6 +231,16 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=y" >> .config #网易云解锁GO版本执行文件（4M多）注意固件超大小,不集成会自动下载
 
         echo "CONFIG_FIRMWARE_INCLUDE_ZEROTIER=y" >> .config #zerotier ~1.3M
+
+        echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=y" >> .config #v2ray二进制文件
+
+        echo "CONFIG_FIRMWARE_INCLUDE_NJIT_CLIENT=n" >> .config
+
+        echo "CONFIG_FIRMWARE_INCLUDE_MINIEAP=n" >> .config
+
+        echo "CONFIG_FIRMWARE_INCLUDE_DOGCOM=n" >> .config
+
+        echo "CONFIG_FIRMWARE_INCLUDE_NAPT66=y" >> .config
 
         #########################################################################################
 
@@ -214,6 +260,8 @@ jobs:
 
         sudo mv -f images/*.trx /opt/images/
 
+        echo "FNAME=$TNAME" >> $GITHUB_ENV
+
     - name : Upload packages
 
       uses: actions/upload-artifact@master
@@ -222,6 +270,6 @@ jobs:
 
       with:
 
-        name: Padavan-packages
+        name: MI-R3P
 
         path: /opt/images
