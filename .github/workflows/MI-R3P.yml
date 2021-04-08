@@ -51,6 +51,12 @@ jobs:
         find /opt/rt-n56u/trunk/user/unblockmusic -name Makefile | xargs sed -i 's/0.2.7/0.2.9/g'
         find /opt/rt-n56u/trunk/user/unblockmusic -name Makefile | xargs sed -i 's#UnblockNeteaseMusic/archive#UnblockNeteaseMusic/archive/refs/tags#g'
 
+        #自定义v2ray版本
+        wget https://github.com/v2fly/v2ray-core/archive/refs/tags/v4.37.1.tar.gz -O /opt/rt-n56u/trunk/user/v2ray/v2ray-core-4.37.1.tar.gz
+        find /opt/rt-n56u/trunk/user/v2ray -name Makefile | xargs sed -i 's/4.31.2/4.37.1/g'
+        find /opt/rt-n56u/trunk/user/v2ray -name Makefile | xargs sed -i 's#https://codeload.github.com/v2ray/v2ray-core/tar.gz/v$(V2ray_VERSION)#https://github.com/v2fly/v2ray-core/archive/refs/tags/v$(V2ray_VERSION).tar.gz#g'
+
+
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
