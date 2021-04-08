@@ -45,6 +45,12 @@ jobs:
         find /opt/rt-n56u/trunk/user/smartdns -name Makefile | xargs sed -i 's/smartdns-Release31/smartdns-master/g'
         find /opt/rt-n56u/trunk/user/smartdns -name Makefile | xargs sed -i 's/tar zxf $(SRC_NAME).tar.gz/unzip $(SRC_NAME).zip/g'
 
+
+        #自定义网易云go版本
+        wget https://github.com/cnsilvan/UnblockNeteaseMusic/archive/refs/tags/0.2.9.tar.gz -O /opt/rt-n56u/trunk/user/unblockmusic/UnblockNeteaseMusic-0.2.9.tar.gz
+        find /opt/rt-n56u/trunk/user/unblockmusic -name Makefile | xargs sed -i 's/0.2.7/0.2.9/g'
+        find /opt/rt-n56u/trunk/user/unblockmusic -name Makefile | xargs sed -i 's#UnblockNeteaseMusic/archive#UnblockNeteaseMusic/archive/refs/tags#g'
+
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
         mkdir -p /opt/images/
