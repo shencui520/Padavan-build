@@ -47,12 +47,12 @@ jobs:
 
 
         #自定义网易云go版本
-        wget https://github.com/cnsilvan/UnblockNeteaseMusic/archive/refs/tags/0.2.9.tar.gz -O /opt/rt-n56u/trunk/user/unblockmusic/UnblockNeteaseMusic-0.2.9.tar.gz
-        find /opt/rt-n56u/trunk/user/unblockmusic -name Makefile | xargs sed -i 's/0.2.7/0.2.9/g'
+        wget https://github.com/cnsilvan/UnblockNeteaseMusic/archive/refs/tags/0.2.10.tar.gz -O /opt/rt-n56u/trunk/user/unblockmusic/UnblockNeteaseMusic-0.2.10.tar.gz
+        find /opt/rt-n56u/trunk/user/unblockmusic -name Makefile | xargs sed -i 's/0.2.7/0.2.10/g'
         find /opt/rt-n56u/trunk/user/unblockmusic -name Makefile | xargs sed -i 's#UnblockNeteaseMusic/archive#UnblockNeteaseMusic/archive/refs/tags#g'
 
         #自定义v2ray版本
-        $wget https://github.com/v2fly/v2ray-core/archive/refs/tags/v4.37.1.tar.gz -O /opt/rt-n56u/trunk/user/v2ray/v2ray-core-4.37.1.tar.gz
+        #wget https://github.com/v2fly/v2ray-core/archive/refs/tags/v4.37.1.tar.gz -O /opt/rt-n56u/trunk/user/v2ray/v2ray-core-4.37.1.tar.gz
         #find /opt/rt-n56u/trunk/user/v2ray -name Makefile | xargs sed -i 's/4.31.2/4.37.1/g'
         #find /opt/rt-n56u/trunk/user/v2ray -name Makefile | xargs sed -i 's#https://codeload.github.com/v2ray/v2ray-core/tar.gz/v$(V2ray_VERSION)#https://github.com/v2fly/v2ray-core/archive/refs/tags/v$(V2ray_VERSION).tar.gz#g'
 
@@ -70,7 +70,7 @@ jobs:
         exit 1
         fi
         cp -f configs/templates/$TNAME.config .config
-                #####################################################################################
+        #####################################################################################
         sed -i '/CONFIG_FIRMWARE_INCLUDE_MENTOHUST/d' .config #删除配置项MENTOHUST
         sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_SERVER/d' .config #删除配置项SOFTETHERVPN
         sed -i '/CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_CLIENT/d' .config #删除配置项SOFTETHERVPN
