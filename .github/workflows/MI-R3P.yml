@@ -35,6 +35,9 @@ jobs:
         git clone --depth=1 https://github.com/chongshengB/rt-n56u.git /opt/rt-n56u
         #git clone --depth=1 https://github.com/shencui520/rt-n56u-chongshengB.git /opt/rt-n56u
         
+        ##下载htop
+        wget https://github.com/htop-dev/htop/archive/refs/tags/3.0.2.tar.gz -O /opt/rt-n56u/trunk/user/htop/3.0.2.tar.gz
+        
         #自定义smartdns版本
         #rm /opt/rt-n56u/trunk/user/smartdns/smartdns-Release31.tar.gz
         #wget https://github.com/pymumu/smartdns/archive/Release33.tar.gz -O /opt/rt-n56u/trunk/user/smartdns/smartdns-Release33.tar.gz
@@ -148,4 +151,4 @@ jobs:
       if: always()
       with:
         name: MI-R3P
-        path: /opt/images/
+        path: /opt/images
