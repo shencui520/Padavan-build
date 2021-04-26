@@ -33,7 +33,8 @@ jobs:
     - name: Clone source code
       run: |
         git clone --depth=1 https://github.com/chongshengB/rt-n56u.git /opt/rt-n56u
-
+        #git clone --depth=1 https://github.com/shencui520/rt-n56u-chongshengB.git /opt/rt-n56u
+        
         #自定义smartdns版本
         #rm /opt/rt-n56u/trunk/user/smartdns/smartdns-Release31.tar.gz
         #wget https://github.com/pymumu/smartdns/archive/Release33.tar.gz -O /opt/rt-n56u/trunk/user/smartdns/smartdns-Release33.tar.gz
@@ -47,8 +48,8 @@ jobs:
 
 
         #自定义网易云go版本
-        wget https://github.com/cnsilvan/UnblockNeteaseMusic/archive/refs/tags/0.2.9.tar.gz -O /opt/rt-n56u/trunk/user/unblockmusic/UnblockNeteaseMusic-0.2.9.tar.gz
-        find /opt/rt-n56u/trunk/user/unblockmusic -name Makefile | xargs sed -i 's/0.2.7/0.2.9/g'
+        wget https://github.com/cnsilvan/UnblockNeteaseMusic/archive/refs/tags/0.2.10.tar.gz -O /opt/rt-n56u/trunk/user/unblockmusic/UnblockNeteaseMusic-0.2.10.tar.gz
+        find /opt/rt-n56u/trunk/user/unblockmusic -name Makefile | xargs sed -i 's/0.2.7/0.2.10/g'
         find /opt/rt-n56u/trunk/user/unblockmusic -name Makefile | xargs sed -i 's#UnblockNeteaseMusic/archive#UnblockNeteaseMusic/archive/refs/tags#g'
 
         #自定义v2ray版本
